@@ -16,11 +16,11 @@ public class DoctorService implements Searchable<Doctor> {
     private DataStore<Doctor> doctorStore = new DataStore<>();
     private IdGenerator idGenerator = IdGenerator.getInstance();
 
-    public Doctor createDoctor(String name, String email, int age, Specialization specialization) {
+    public Doctor createDoctor(String name, String email, int age, Specialization specialization, double consultationFee) {
 
         int id = idGenerator.generateId();
 
-        Doctor doctor = new Doctor(id, name, email, age, specialization);
+        Doctor doctor = new Doctor(id, name, email, age, specialization,consultationFee);
 
         doctorStore.add(id, doctor);
 
