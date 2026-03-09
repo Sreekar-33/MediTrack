@@ -53,4 +53,8 @@ public class DoctorService implements Searchable<Doctor> {
     public Collection<Doctor> getAllDoctors() {
         return doctorStore.getAll();
     }
+
+    public void deleteDoctor(int doctorId){
+        doctorStore.remove(doctorId);
+    }
 }

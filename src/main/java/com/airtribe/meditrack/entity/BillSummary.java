@@ -1,6 +1,6 @@
 package com.airtribe.meditrack.entity;
 
-public class BillSummary {
+public final class BillSummary {
     private static final long serialVersionUID = 1L;
 
     private final int billId;

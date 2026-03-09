@@ -57,14 +57,16 @@ public class TestRunner {
                 "Dr Smith",
                 "smith@mail.com",
                 45,
-                Specialization.CARDIOLOGIST
+                Specialization.CARDIOLOGIST,
+                400
         );
 
         Doctor d2 = doctorService.createDoctor(
                 "Dr Lee",
                 "lee@mail.com",
                 40,
-                Specialization.DERMATOLOGIST
+                Specialization.DERMATOLOGIST,
+                500
         );
 
         System.out.println("Created Doctors:");
@@ -90,7 +92,8 @@ public class TestRunner {
                 "Dr Adams",
                 "adams@mail.com",
                 50,
-                Specialization.NEUROLOGIST
+                Specialization.NEUROLOGIST,
+                1000
         );
 
         Appointment ap = appointmentService.createAppointment(d, p);
