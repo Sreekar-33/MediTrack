@@ -24,6 +24,17 @@ public class Main {
         BillingService billingService =
                 new BillingService(new StandardBilling());
 
+        if (args.length > 0 && args[0].equals("--loadData")) {
+
+            System.out.println("Loading persisted data...");
+
+            patientService.loadPatients();
+            doctorService.loadDoctors();
+            appointmentService.loadAppointments(patientService, doctorService);
+
+            System.out.println("Data loaded successfully.");
+        }
+
         while (true) {
 
             try {

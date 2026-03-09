@@ -2,15 +2,19 @@ package com.airtribe.meditrack.services;
 
 import com.airtribe.meditrack.entity.Patient;
 import com.airtribe.meditrack.interfaces.Searchable;
+import com.airtribe.meditrack.util.CSVUtil;
+import com.airtribe.meditrack.util.ConfigUtil;
 import com.airtribe.meditrack.util.DataStore;
 import com.airtribe.meditrack.util.IdGenerator;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PatientService implements Searchable<Patient> {
+    private String filePath = ConfigUtil.getProperty("data.patient.file");
 
     private DataStore<Patient> patientStore = new DataStore<>();
     private IdGenerator idGenerator = IdGenerator.getInstance();
@@ -21,6 +25,7 @@ public class PatientService implements Searchable<Patient> {
         int id = idGenerator.generateId();
         Patient patient = new Patient(id, name, email, age);
         patientStore.add(id, patient);
+        savePatient(patient);
         return patient;
     }
 
@@ -93,6 +98,33 @@ public class PatientService implements Searchable<Patient> {
                 .stream()
                 .filter(p -> p.getAge() == age)
                 .collect(Collectors.toList());
+    }
+
+    public void savePatient(Patient patient) {
+
+        String row = patient.getId() + ","
+                + patient.getName() + ","
+                + patient.getEmail() + ","
+                + patient.getAge();
+
+        CSVUtil.writeCSV(filePath, row);
+    }
+
+    public void loadPatients() {
+
+        List<String[]> rows = CSVUtil.readCSV(filePath);
+
+        for (String[] row : rows) {
+
+            int id = Integer.parseInt(row[0]);
+            String name = row[1];
+            String email = row[2];
+            int age = Integer.parseInt(row[3]);
+
+            Patient patient = new Patient(id, name, email, age);
+
+            patientStore.add(id, patient);
+        }
     }
 
 }

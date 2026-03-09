@@ -1,14 +1,14 @@
 package com.airtribe.meditrack.util;
 
 import java.io.*;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVUtil {
 
-    private static final Logger logger = Logger.getLogger(CSVUtil.class.getName());
+    public static List<String[]> readCSV(String filePath) {
 
-
-    public static void readCSV(String filePath) {
+        List<String[]> rows = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
@@ -16,34 +16,29 @@ public class CSVUtil {
 
             while ((line = br.readLine()) != null) {
 
-                logger.info(line);
+                String[] values = line.split(",");
 
+                rows.add(values);
             }
 
         } catch (IOException e) {
 
-            logger.severe("Error reading CSV file: " + e.getMessage());
-
+            System.out.println("Error reading CSV: " + e.getMessage());
         }
 
+        return rows;
     }
 
-    public static void writeCSV(String filePath, String[] data) {
+    public static void writeCSV(String filePath, String data) {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
 
-            String row = String.join(",", data);
-
-            bw.write(row);
+            bw.write(data);
             bw.newLine();
-
-            logger.info("Row written to CSV: " + row);
 
         } catch (IOException e) {
 
-            logger.severe("Error writing CSV file: " + e.getMessage());
-
+            System.out.println("Error writing CSV: " + e.getMessage());
         }
-
     }
 }

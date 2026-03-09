@@ -14,7 +14,7 @@ public class Appointment extends MedicalEntity implements Cloneable {
         super(id);
         this.doctor = doctor;
         this.patient = patient;
-        this.status = AppointmentStatus.PENDING;
+        this.status = AppointmentStatus.CONFIRMED;
     }
 
 
