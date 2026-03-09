@@ -14,7 +14,7 @@ brew install openjdk@24
 
 Then add it to your path:
 ```bash
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA_HOME=$(/usr/libexec/java_home -v 24)
 export PATH=$JAVA_HOME/bin:$PATH
 ```
 
@@ -27,7 +27,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 ### Linux (Ubuntu/Debian)
 ```bash
 sudo apt update
-sudo apt install openjdk-17-jdk
+sudo apt install openjdk-24-jdk
 ```
 
 ## 2. Verify Installation
