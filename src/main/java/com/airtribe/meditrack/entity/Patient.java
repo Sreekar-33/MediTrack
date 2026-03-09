@@ -12,6 +12,7 @@ public class Patient extends Person implements Cloneable {
     * and we can use single patient objects for many appointments.
      */
 
+
     @Override
     public Patient clone() {
 
@@ -20,5 +21,9 @@ public class Patient extends Person implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+    @Override
+    public String getEntityType() {
+        return "Patient";
     }
 }

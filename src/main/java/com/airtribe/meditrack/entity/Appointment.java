@@ -2,25 +2,21 @@ package com.airtribe.meditrack.entity;
 
 import com.airtribe.meditrack.enums.AppointmentStatus;
 
-public class Appointment implements Cloneable {
+public class Appointment extends MedicalEntity implements Cloneable {
 
-    private int appointmentId;
+
     private Doctor doctor;
     private Patient patient;
     private AppointmentStatus status;
 
 
-
     public Appointment(int id, Doctor doctor, Patient patient) {
-        this.appointmentId = id;
+        super(id);
         this.doctor = doctor;
         this.patient = patient;
         this.status = AppointmentStatus.PENDING;
     }
 
-    public int getAppointmentId() {
-        return appointmentId;
-    }
 
     public Doctor getDoctor() {
         return doctor;
@@ -55,5 +51,15 @@ public class Appointment implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+    @Override
+    public String getEntityType() {
+        return "Appointment";
+    }
+
+    @Override
+    public String getDetails() {
+        return String.format("Appointment [%s] | Patient: %s | Doctor: Dr. %s | Status: %s",
+                getId(), patient.getName(), doctor.getName(), status.name());
     }
 }
