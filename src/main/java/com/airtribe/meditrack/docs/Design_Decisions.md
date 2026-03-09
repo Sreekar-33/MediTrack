@@ -83,8 +83,7 @@ I used `try-with-resources` in `CSVUtil` for all file operations to ensure prope
 
 I kept concurrency minimal since this is a CLI app:
 - `AtomicInteger` in `IdGenerator` for thread-safe counters
-- `TimerTask` running on a daemon thread for periodic appointment reminders
-- `synchronized` isn't explicitly used but the data structures are safe for the single-writer pattern we have
+- `synchronized` is used in SingleTon Pattern. 
 
 
 ## AI Helper
