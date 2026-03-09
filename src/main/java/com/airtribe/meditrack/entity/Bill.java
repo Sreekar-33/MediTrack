@@ -102,4 +102,10 @@ public class Bill implements Payable {
                 strategyName,
                 baseAmount, taxAmount, totalAmount);
     }
+
+    //immutable summary snapshot of bill
+    public BillSummary toSummary() {
+        return new BillSummary(getBillId(), appointment.getPatient().getName(),
+                appointment.getDoctor().getName(), baseAmount, totalAmount, strategyName);
+    }
     }
