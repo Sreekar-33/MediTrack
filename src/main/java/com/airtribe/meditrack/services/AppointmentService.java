@@ -4,6 +4,7 @@ import com.airtribe.meditrack.entity.Appointment;
 import com.airtribe.meditrack.entity.Doctor;
 import com.airtribe.meditrack.entity.Patient;
 import com.airtribe.meditrack.enums.AppointmentStatus;
+import com.airtribe.meditrack.exception.AppointmentNotFoundException;
 import com.airtribe.meditrack.util.DataStore;
 import com.airtribe.meditrack.util.IdGenerator;
 
@@ -29,17 +30,28 @@ public class AppointmentService {
     }
 
     // Get Appointment by ID
-    public Optional<Appointment> getAppointment(int id) {
-        return Optional.ofNullable(appointmentStore.get(id));
+    public Appointment getAppointment(int id) throws AppointmentNotFoundException{
+        Appointment appointment = appointmentStore.get(id);
+
+        if (appointment == null) {
+            throw new AppointmentNotFoundException(
+                    "Appointment with ID " + id + " not found."
+            );
+        }
+        return appointment;
     }
 
     // Cancel Appointment
-    public boolean cancelAppointment(int id) {
+    public void cancelAppointment(int id) throws AppointmentNotFoundException{
         Appointment appointment = appointmentStore.get(id);
-        if (appointment == null)
-            return false;
-        appointment.setStatus(AppointmentStatus.CANCELLED);
-        return true;
+
+        if (appointment == null) {
+            throw new AppointmentNotFoundException(
+                    "Cannot cancel. Appointment with ID " + id + " does not exist."
+            );
+        }
+
+        appointment.cancel();
     }
 
     // List all appointments
