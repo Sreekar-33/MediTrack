@@ -112,4 +112,14 @@ public class Bill extends MedicalEntity implements Payable {
     public BillSummary toSummary() {
         return  this.billSummary;
     }
+
+    @Override
+    public String getDetails() {
+        return String.format("Bill [%s] | Appointment: %s | Strategy: %s | Base: %.2f | Tax: %.2f | Total: %.2f",
+                getId(), appointment.getId(), strategyName, baseAmount, taxAmount, totalAmount);
+    }
+    @Override
+    public String getEntityType(){
+        return "Bill";
+    }
 }

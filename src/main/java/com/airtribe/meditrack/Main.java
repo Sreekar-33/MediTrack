@@ -212,7 +212,7 @@ public class Main {
 
             for (Appointment ap : appointments) {
 
-                System.out.println("Appointment ID: " + ap.getAppointmentId()
+                System.out.println("Appointment ID: " + ap.getId()
                         + " | Patient: " + ap.getPatient().getName()
                         + " | Doctor: Dr. " + ap.getDoctor().getName()
                         + " | Status: " + ap.getStatus());
@@ -319,7 +319,7 @@ public class Main {
 
             Appointment appointment = appointmentService.createAppointment(doctor, patient);
 
-            System.out.println("Appointment created with ID: " + appointment.getAppointmentId());
+            System.out.println("Appointment created with ID: " + appointment.getId());
 
         }
         catch (NumberFormatException e) {
