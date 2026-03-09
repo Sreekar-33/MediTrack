@@ -6,5 +6,6 @@ public enum Specialization {
     NEUROLOGIST,
     ONCOLOGIST,
     ORTHOPEDICS,
-    DERMATOLOGIST
+    DERMATOLOGIST,
+    GENERALPHYSICIAN
 }

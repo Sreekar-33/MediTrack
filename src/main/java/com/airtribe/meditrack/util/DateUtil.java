@@ -24,4 +24,12 @@ public class DateUtil {
         return LocalDateTime.now();
 
     }
+    // Generates available time slots for a given date
+    public static String[] getAvailableSlots(String date) {
+        return new String[]{
+                date + " 09:00", date + " 10:00", date + " 11:00",
+                date + " 13:00", date + " 14:00", date + " 15:00",
+                date + " 16:00", date + " 17:00"
+        };
+    }
 }
