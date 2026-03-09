@@ -9,6 +9,7 @@ import com.airtribe.meditrack.util.*;
 import com.airtribe.meditrack.billingStrategy.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -38,7 +39,8 @@ public class Main {
                 System.out.println("7. Create Appointment");
                 System.out.println("8. View Appointment");
                 System.out.println("9. Generate Bill");
-                System.out.println("10. Exiting Meditrack");
+                System.out.println("10. AI Doctor Recommendation");
+                System.out.println("11. Exiting Meditrack");
 
                 System.out.print("Enter choice: ");
 
@@ -81,8 +83,11 @@ public class Main {
                     case 9:
                         generateBill(scanner, appointmentService, billingService);
                         break;
-
                     case 10:
+                        aiRecommendation(scanner, doctorService);
+                        break;
+
+                    case 11:
                         System.out.println("Exiting MediTrack...");
                         return;
 
@@ -212,7 +217,7 @@ public class Main {
 
             for (Appointment ap : appointments) {
 
-                System.out.println("Appointment ID: " + ap.getAppointmentId()
+                System.out.println("Appointment ID: " + ap.getId()
                         + " | Patient: " + ap.getPatient().getName()
                         + " | Doctor: Dr. " + ap.getDoctor().getName()
                         + " | Status: " + ap.getStatus());
@@ -319,7 +324,7 @@ public class Main {
 
             Appointment appointment = appointmentService.createAppointment(doctor, patient);
 
-            System.out.println("Appointment created with ID: " + appointment.getAppointmentId());
+            System.out.println("Appointment created with ID: " + appointment.getId());
 
         }
         catch (NumberFormatException e) {
@@ -401,6 +406,52 @@ public class Main {
             System.out.println("Invalid appointment ID.");
 
         }
+    }
+
+    private static void aiRecommendation(Scanner scanner, DoctorService doctorService) {
+        System.out.println("\n--- AI Doctor Recommendation ---");
+        String symptoms = readLine(scanner, "Describe your symptoms: ");
+        List<Doctor> recommended = AIHelper.recommendDoctors(symptoms, doctorService.getAllDoctors());
+
+        if (recommended.isEmpty()) {
+            System.out.println("No matching doctors found. Please add doctors first.");
+            return;
+        }
+
+        System.out.println("Recommended doctors:");
+        for (int i = 0; i < recommended.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + recommended.get(i).getDetails());
+        }
+
+        System.out.println("\nWould you like to check slots for any of these doctors?");
+        String bookChoice = readLine(scanner, "Enter the doctor number (or press Enter to skip): ");
+        if (bookChoice.isEmpty()) return;
+
+        try {
+            int doctorNum = Integer.parseInt(bookChoice);
+            if (doctorNum < 1 || doctorNum > recommended.size()) {
+                System.out.println("Invalid selection.");
+                return;
+            }
+
+            Doctor selectedDoctor = recommended.get(doctorNum - 1);
+            String date = readLine(scanner, "Enter date for slots (yyyy-MM-dd): ");
+
+            List<String> slots = AIHelper.suggestSlots(date);
+            System.out.println("Suggested slots for Dr. " + selectedDoctor.getName() + " on " + date + ":");
+            for (int i = 0; i < slots.size(); i++) {
+                System.out.println("  " + (i + 1) + ". " + slots.get(i));
+            }
+
+            System.out.println("\nTo book an appointment, go back to Main Menu -> 3. Manage Appointments -> 1. Create Appointment.");
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
+        }
+    }
+    private static String readLine(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
     }
 
 

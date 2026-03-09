@@ -98,7 +98,7 @@ public class TestRunner {
 
         Appointment ap = appointmentService.createAppointment(d, p);
 
-        System.out.println("Appointment created with ID: " + ap.getAppointmentId());
+        System.out.println("Appointment created with ID: " + ap.getId());
 
         try {
 
