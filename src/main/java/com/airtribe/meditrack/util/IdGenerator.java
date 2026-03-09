@@ -3,7 +3,7 @@ package com.airtribe.meditrack.util;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IdGenerator {
-    private static IdGenerator instance = new IdGenerator();
+    private static IdGenerator instance;
 
     private AtomicInteger counter = new AtomicInteger(1);
 

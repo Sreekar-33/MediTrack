@@ -70,4 +70,29 @@ public class PatientService implements Searchable<Patient> {
         return patientStore.getAll();
     }
 
+    // search by ID
+    public Patient searchPatient(int id) {
+
+        return patientStore.get(id);
+
+    }
+
+    // search by name
+    public Collection<Patient> searchPatient(String name) {
+
+        return patientStore.getAll()
+                .stream()
+                .filter(p -> p.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
+
+    // search by age
+    public Collection<Patient> searchPatient(int age, boolean byAge) {
+
+        return patientStore.getAll()
+                .stream()
+                .filter(p -> p.getAge() == age)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -7,6 +7,8 @@ public class Bill implements Payable {
 
     private int billId;
 
+    private final BillSummary billSummary;
+
     private double baseAmount;
     private double taxAmount;
     private double totalAmount;
@@ -75,6 +77,9 @@ public class Bill implements Payable {
         this.baseAmount = appointment.getDoctor().getConsultationFee();
         this.totalAmount = strategy.calculate(baseAmount);
         this.taxAmount = totalAmount - baseAmount;
+        this.billSummary = new BillSummary(getBillId(), appointment.getPatient().getName(),
+                appointment.getDoctor().getName(), baseAmount, totalAmount, strategyName);
+
     }
 
     @Override
@@ -105,7 +110,6 @@ public class Bill implements Payable {
 
     //immutable summary snapshot of bill
     public BillSummary toSummary() {
-        return new BillSummary(getBillId(), appointment.getPatient().getName(),
-                appointment.getDoctor().getName(), baseAmount, totalAmount, strategyName);
+        return  this.billSummary;
     }
-    }
+}
