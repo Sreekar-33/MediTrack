@@ -18,4 +18,17 @@ public class Doctor extends Person {
     public double getConsultationFee(){
         return consultationFee;
     }
+
+    @Override
+    public String getDetails() {
+        return super.getDetails() + String.format(" | Specialization: %s | Fee: %.2f",
+                specialization.name(), consultationFee);
+    }
+    @Override
+    public String getEntityType(){
+        return "Doctor";
+    }
+
+
+    
 }

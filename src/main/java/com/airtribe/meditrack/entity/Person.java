@@ -1,7 +1,7 @@
 package com.airtribe.meditrack.entity;
 
-public abstract class Person {
-    protected int id;
+public abstract class Person extends MedicalEntity{
+
     protected String name;
     protected String email;
 
@@ -34,9 +34,9 @@ public abstract class Person {
 
 
     public Person(int id, String name, String email, int age) {
+        super(id);
         this.name = name;
         this.email = email;
-        this.id = id;
         this.age = age;
     }
 
@@ -46,5 +46,11 @@ public abstract class Person {
 
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public String getDetails() {
+        return String.format("%s | Name: %s | Age: %d | Email: %s",
+                getEntityType(), name, age, email);
     }
 }

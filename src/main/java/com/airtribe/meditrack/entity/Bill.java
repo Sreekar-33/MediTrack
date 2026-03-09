@@ -3,7 +3,7 @@ package com.airtribe.meditrack.entity;
 import com.airtribe.meditrack.interfaces.BillingStrategy;
 import com.airtribe.meditrack.interfaces.Payable;
 
-public class Bill implements Payable {
+public class Bill extends MedicalEntity implements Payable {
 
     private int billId;
 
@@ -68,7 +68,7 @@ public class Bill implements Payable {
     private String strategyName;
 
     public Bill(int billId, Appointment appointment, BillingStrategy strategy) {
-        this.billId = billId;
+        super(billId);
         this.appointment = appointment;
         this.billingStrategy = strategy;
         this.strategyName = strategy.getStrategyName();
@@ -108,4 +108,17 @@ public class Bill implements Payable {
         return new BillSummary(getBillId(), appointment.getPatient().getName(),
                 appointment.getDoctor().getName(), baseAmount, totalAmount, strategyName);
     }
+
+
+    @Override
+    public String getEntityType() {
+        return "Bill";
     }
+
+    @Override
+    public String getDetails() {
+        return String.format("Bill [%s] | Appointment: %s | Strategy: %s | Base: %.2f | Tax: %.2f | Total: %.2f",
+                getId(), appointment.getId(), strategyName, baseAmount, taxAmount, totalAmount);
+    }
+
+}
